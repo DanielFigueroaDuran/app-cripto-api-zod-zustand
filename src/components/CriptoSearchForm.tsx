@@ -1,7 +1,8 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { currencies } from "../data"
 import { useCryptoStore } from "../store/store"
 import { Pair } from "../types";
+import ErrorMessage from "./ErrorMessage";
 
 const CriptoSearchForm = () => {
       const { cryptocurrencies } = useCryptoStore();
@@ -10,6 +11,8 @@ const CriptoSearchForm = () => {
             criptocurrency: ''
 
       });
+
+      const [error, setError] = useState('');
 
       const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
             setPair({
@@ -21,13 +24,29 @@ const CriptoSearchForm = () => {
       //console.log(pair);
       //console.log(cryptocurrencies);
 
+      const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+
+            if (Object.values(pair).includes('')) {
+                  setError('Todos los campos son obligatorios');
+                  return
+            }
+
+            setError('');
+      }
+
       return (
-            <form className="form">
+            <form
+                  className="form"
+                  onSubmit={handleSubmit}
+            >
+                  {error && <ErrorMessage>{error}</ErrorMessage>}
                   <div className="field">
                         <label htmlFor="currency">Moneda</label>
                         <select
                               name="currency"
                               id="currency"
+                              value={pair.currency}
                               onChange={handleChange}
                         >
 
@@ -47,6 +66,7 @@ const CriptoSearchForm = () => {
                         <select
                               name="criptocurrency"
                               id="criptocurrency"
+                              value={pair.criptocurrency}
                               onChange={handleChange}
                         >
                               <option value="">-- Seleccione --</option>
