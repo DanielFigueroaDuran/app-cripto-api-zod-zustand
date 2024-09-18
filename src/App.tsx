@@ -3,7 +3,6 @@ import CriptoSearchForm from "./components/CriptoSearchForm"
 import { useCryptoStore } from "./store/store"
 
 
-
 function App() {
   const { fetchCrypto } = useCryptoStore();
 

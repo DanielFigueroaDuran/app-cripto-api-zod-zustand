@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { CurrencySchema } from "../shema/cripto-shema"
+import { CrytoCurrencyResponseShema, CurrencySchema } from "../shema/cripto-shema"
 
 export type Currency = z.infer<typeof CurrencySchema>
-// code: string,
-// name: string
+
+export type Cryptocurrency = z.infer<typeof CrytoCurrencyResponseShema>
